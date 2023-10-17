@@ -5,7 +5,7 @@ from gensim.corpora import WikiCorpus
 
 
 def wiki2txt(articles_data_path):
-    wiki_corpus = WikiCorpus(articles_data_path, dictionary={}, processes=16)
+    wiki_corpus = WikiCorpus(articles_data_path, dictionary={})
 
     with open("articles_texts.txt", "w", encoding="utf-8", buffering=4096) as f:
         num = 0
