@@ -1,5 +1,5 @@
-import sys
 import datetime
+import sys
 
 from gensim.corpora import WikiCorpus
 

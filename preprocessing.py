@@ -1,8 +1,8 @@
 import concurrent.futures
 import datetime
 import opencc
-import sys
 import os
+import sys
 
 
 def process_file(input_file_path, output_file_path):
