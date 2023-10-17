@@ -4,10 +4,10 @@ import datetime
 from gensim.corpora import WikiCorpus
 
 
-def wiki2txt(articles_data_path):
+def wiki2txt(articles_data_path, output_file_path):
     wiki_corpus = WikiCorpus(articles_data_path, dictionary={})
 
-    with open("articles_texts.txt", "w", encoding="utf-8", buffering=4096) as f:
+    with open(output_file_path, "w", encoding="utf-8", buffering=4096) as f:
         num = 0
         wait_to_write = []
         for text in wiki_corpus.get_texts():
@@ -20,7 +20,11 @@ def wiki2txt(articles_data_path):
     print("处理完成")
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print(f"Usage: python3 {sys.argv[0]} path/to/wiki_articles_data")
+    if len(sys.argv) != 3:
+        print(f"Usage: python3 {sys.argv[0]} path/to/wiki_articles_data path/to/output_file")
         exit()
-    wiki2txt(sys.argv[1])
+
+    input_file = sys.argv[1]
+    output_file = sys.argv[2]
+
+    wiki2txt(input_file, output_file)
