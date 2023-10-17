@@ -21,6 +21,6 @@ def wiki2txt(articles_data_path):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python3 " + sys.argv[0] + "wiki articles_data_path")
+        print(f"Usage: python3 {sys.argv[0]} path/to/wiki_articles_data")
         exit()
     wiki2txt(sys.argv[1])
