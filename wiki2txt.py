@@ -5,7 +5,7 @@ from gensim.corpora import WikiCorpus
 
 
 def wiki2txt(articles_data_path, output_file_path):
-    print(f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 开始处理 {input_file_path}")
+    print(f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 开始处理 {articles_data_path}")
     wiki_corpus = WikiCorpus(articles_data_path, dictionary={})
 
     with open(output_file_path, "w", encoding="utf-8", buffering=4096) as f:

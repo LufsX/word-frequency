@@ -6,7 +6,7 @@ import sys
 
 
 def process_file(input_file_path, output_file_path):
-    converter = opencc.OpenCC("t2s.json")
+    converter = opencc.OpenCC("t2s")
 
     print(f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 开始处理 {input_file_path}")
 
