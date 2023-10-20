@@ -56,7 +56,7 @@ def process_large_file(
         for result in results:
             o.write(result)
 
-    print(f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 保存到 {output_file_path}")
+    print(f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 已保存到 {output_file_path}")
 
 
 if __name__ == "__main__":
