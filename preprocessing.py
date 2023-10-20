@@ -24,7 +24,7 @@ def process_file(input_file_path, output_file_path):
 
 
 def convert_lines(lines):
-    converter = opencc.OpenCC("t2s.json")
+    converter = opencc.OpenCC("t2s")
     content = "".join(lines)
     return converter.convert(content)
 
@@ -61,7 +61,7 @@ def process_large_file(
 
 if __name__ == "__main__":
     if len(sys.argv) <= 2:
-        print(f"Usage: python3 {sys.argv[0]} path/to/input_file path/to/output_file")
+        print(f"Usage: python {sys.argv[0]} path/to/input_file path/to/output_file")
         exit()
 
     input_file = sys.argv[1]
