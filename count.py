@@ -9,7 +9,7 @@ def count_words_in_chunk(chunk):
     return Counter(chunk.split())
 
 
-def process_segment_large_file(
+def count_large_file(
     input_file_path,
     output_file_path,
     lines_per_process=2000,
@@ -34,7 +34,7 @@ def process_segment_large_file(
 
     print(f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 处理 {input_file_path} 完成")
 
-    with open(output_file_path, "w") as file:
+    with open(output_file_path, "w", encoding="utf-8") as file:
         sorted_data = sorted(counter.items(), key=lambda x: x[1], reverse=True)
         for word, count in sorted_data:
             file.write(f"{word}\t{count}\n")
@@ -50,4 +50,4 @@ if __name__ == "__main__":
     input_file = sys.argv[1]
     output_file = sys.argv[2]
 
-    process_segment_large_file(input_file, output_file)
+    count_large_file(input_file, output_file)
