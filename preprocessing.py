@@ -36,7 +36,7 @@ def process_large_file(
     num_processes=max(1, os.cpu_count() - 1),
 ):
     print(
-        f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 使用 {num_processes} 线程开始处理 {input_file_path}"
+        f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 使用 {num_processes} 线程开始对 {input_file_path} 进行预处理"
     )
 
     with open(input_file_path, "r", encoding="utf-8") as i:
@@ -56,7 +56,7 @@ def process_large_file(
         for result in results:
             o.write(result)
 
-    print(f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 已保存到 {output_file_path}")
+    print(f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 已将预处理过的文件保存至 {output_file_path}")
 
 
 if __name__ == "__main__":

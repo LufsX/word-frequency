@@ -6,7 +6,7 @@ from gensim.corpora import WikiCorpus
 
 def wiki2txt(articles_data_path, output_file_path):
     print(
-        f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 开始处理 {articles_data_path}"
+        f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 开始将 {articles_data_path} 文件转换为纯文本文件"
     )
     wiki_corpus = WikiCorpus(articles_data_path, dictionary={})
 
