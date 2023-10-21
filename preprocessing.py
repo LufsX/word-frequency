@@ -1,7 +1,6 @@
-import concurrent.futures
 import datetime
+import multiprocessing
 import opencc
-import os
 import sys
 
 
@@ -33,7 +32,7 @@ def process_large_file(
     input_file_path,
     output_file_path,
     lines_per_process=2000,
-    num_processes=max(1, os.cpu_count() - 1),
+    num_processes=max(1, multiprocessing.cpu_count() - 1),
 ):
     print(
         f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 使用 {num_processes} 线程开始对 {input_file_path} 进行预处理"
@@ -47,8 +46,8 @@ def process_large_file(
         for i in range(0, len(lines), lines_per_process)
     ]
 
-    with concurrent.futures.ProcessPoolExecutor(max_workers=num_processes) as executor:
-        results = list(executor.map(convert_lines, chunks))
+    with multiprocessing.Pool(num_processes) as pool:
+        results = pool.map(convert_lines, chunks)
 
     print(f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 处理 {input_file_path} 完成")
 
@@ -56,7 +55,9 @@ def process_large_file(
         for result in results:
             o.write(result)
 
-    print(f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 已将预处理过的文件保存至 {output_file_path}")
+    print(
+        f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 已将预处理过的文件保存至 {output_file_path}"
+    )
 
 
 if __name__ == "__main__":

@@ -1,7 +1,6 @@
-import concurrent.futures
 import datetime
 import jieba
-import os
+import multiprocessing
 import re
 import sys
 
@@ -20,11 +19,15 @@ def segment_lines(lines):
     return seg_list
 
 
+def process_segment_chunk(chunk):
+    return segment_lines(chunk)
+
+
 def process_segment_large_file(
     input_file_path,
     output_file_path,
     lines_per_process=2000,
-    num_processes=max(1, os.cpu_count() - 1),
+    num_processes=max(1, multiprocessing.cpu_count() - 1),
 ):
     print(
         f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 使用 {num_processes} 线程对 {input_file_path} 进行分词"
@@ -38,8 +41,8 @@ def process_segment_large_file(
         for i in range(0, len(lines), lines_per_process)
     ]
 
-    with concurrent.futures.ProcessPoolExecutor(max_workers=num_processes) as executor:
-        results = list(executor.map(segment_lines, chunks))
+    with multiprocessing.Pool(processes=num_processes) as pool:
+        results = list(pool.map(process_segment_chunk, chunks))
 
     print(f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 对 {input_file_path} 分词完成")
 
@@ -48,7 +51,9 @@ def process_segment_large_file(
             for line in result:
                 o.write(line + "\n")
 
-    print(f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 已将分词后的文件保存至 {output_file_path}")
+    print(
+        f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 已将分词后的文件保存至 {output_file_path}"
+    )
 
 
 if __name__ == "__main__":
