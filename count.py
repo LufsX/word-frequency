@@ -1,6 +1,7 @@
 from collections import Counter
+import concurrent.futures
 import datetime
-import multiprocessing
+import os
 import sys
 
 
@@ -8,30 +9,25 @@ def count_words_in_chunk(chunk):
     return Counter(chunk.split())
 
 
-def count_large_file_chunk(chunk):
-    return sum(map(count_words_in_chunk, chunk), Counter())
-
-
 def count_large_file(
     input_file_path,
     output_file_path,
-    lines_per_process=1000,
-    num_processes=max(1, multiprocessing.cpu_count() - 1),
+    lines_per_process=2000,
+    num_processes=max(1, os.cpu_count() - 1),
 ):
     print(
         f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 使用 {num_processes} 线程开始对 {input_file_path} 词频统计"
     )
-
+    counter = Counter()
     with open(input_file_path, "r", encoding="utf-8") as i:
         lines = i.readlines()
 
     chunks = [
-        lines[i : i + lines_per_process]
+        "".join(lines[i : i + lines_per_process])
         for i in range(0, len(lines), lines_per_process)
     ]
-
-    with multiprocessing.Pool(processes=num_processes) as pool:
-        word_lists = pool.map(count_large_file_chunk, chunks)
+    with concurrent.futures.ProcessPoolExecutor(max_workers=num_processes) as executor:
+        word_lists = list(executor.map(count_words_in_chunk, chunks))
 
     counter = sum(word_lists, Counter())
 
