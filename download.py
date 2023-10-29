@@ -9,6 +9,7 @@ def download_file(url, file_path, proxied=False):
     if os.path.exists(file_path):
         print(f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} {file_path} 已存在，跳过下载")
         return
+    print(f"{datetime.datetime.now().strftime('%H:%M:%S.%f')} 开始下载 {url}")
     response = requests.get(url)
     with open(file_path, "wb") as f:
         f.write(response.content)
